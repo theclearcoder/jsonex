@@ -11,7 +11,7 @@ defmodule Jsonex do
 
   def encode(term) when is_boolean(term), do: to_string(term)
 
-  def encode(term) when is_binary(term) or is_atom(term), do: escaped(term)
+  def encode(term) when is_binary(term) or is_atom(term), do: in_quotes(term)
 
   def encode(term) when is_map(term) do
     "{#{Enum.map_join(term, ",", fn {k, v} -> encode(k, v) end)}}"
@@ -25,7 +25,7 @@ defmodule Jsonex do
 
   def encode(term1, term2), do: "#{encode(term1)}:#{encode(term2)}"
 
-  defp escaped(term), do: "\"#{to_string(term)}\""
+  defp in_quotes(term), do: "\"#{to_string(term)}\""
 end
 
 defmodule Jsonex.BadInputError do
